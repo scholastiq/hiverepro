@@ -1,3 +1,11 @@
+/* Copyright (C) 2019 Mark Phillips - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the GNU GPL-3.0 licence.
+ *
+ * A copy of the GNL Licence can be found at:
+ * https://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 // CANVAS for Hive repro
 
 canvas.width = window.innerWidth;

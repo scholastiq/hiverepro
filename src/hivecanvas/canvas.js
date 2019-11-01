@@ -9,7 +9,7 @@
 // CANVAS for Hive repro
 
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight-550;
+canvas.height = window.innerHeight;
 
 let ctx = document.getElementById('canvas').getContext('2d');
 

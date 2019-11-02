@@ -17,7 +17,7 @@ let ctx = document.getElementById('canvas').getContext('2d');
 let arrowDirection = "arrowRight"; // use switch and case to change direction
 let moveForward = "moveRight"; // use switch to change calcs for movement
 let stars = 11;
-let speed = [150, 100, 50]
+let speed = [250, 100, 50]
 let playSpeed = speed[0];
 let running = false;
 let abort = false;
@@ -90,7 +90,6 @@ function Slot(name, blueOn, orangeOn, greenOn, greyOn, xSlot, ySlot, boxActive, 
     this.orangePenOn = orangePenOn;
     this.greenPenOn = greenPenOn;
 }
-
 Slot.prototype.values = function () {
     let valueSet = "Name:" + this.name + ", blue:" + this.blueOn + ", orange:" + this.orangeOn + ", green:" + this.greenOn + ", grey:" + this.greyOn + ", x:" + this.xSlot + ", y:" + this.ySlot + ", active:" + this.boxActive + ", forward:" + this.forwardOn + ", turn right:" + this.turnRightOn + ", turn left:" + this.turnLeftOn + ", f1:" + this.f1On + ", pen orange:" + this.orangePenOn + ", pen green:" + this.greenPenOn;
     return valueSet;
@@ -402,9 +401,9 @@ back.onload = function () {
             // outside grey boxes to enclose game
             ctx.fillStyle = '#bcc5cc';
             ctx.fillRect(0, 0, 80, innerHeight);
-            ctx.fillRect(1020, 0, 200, innerHeight);
-            ctx.fillRect(0, 650, innerWidth, 390);
-            ctx.fillRect(1150, 0, 1000, 800);
+            ctx.fillRect(1020, 0, innerWidth-200, innerHeight);
+            ctx.fillRect(0, 650, innerWidth, innerHeight-390);
+            //ctx.fillRect(1150, 0, 1000, 800);
 
             ctx.drawImage(atlas, 420, 0, 35, 35, 136, 136, 35, 35); // 1st row left corner
             ctx.drawImage(atlas, 420, 0, 35, 35, 244, 136, 35, 35); // 1st row 4th

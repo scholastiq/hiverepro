@@ -391,7 +391,7 @@ back.onload = function () {
         
         // text
         ctx.font = "18px Helvetica";
-        ctx.fillStyle = "#858C93";
+        ctx.fillStyle = "#59534E";
         ctx.fillText("Execution", 282, 550);
         ctx.fillText("Speed", 137, 550);
         ctx.fillText("Functions", 647, 250);
@@ -3348,7 +3348,7 @@ back.onload = function () {
             arrow[2] = false;
             arrow[3] = false;
             ctx.font = "18px Helvetica";
-            ctx.fillStyle = "#b5b5b5";
+            ctx.fillStyle = "#59534E";
             ctx.fillText("Execution", 282, 550);
             ctx.fillText("Speed", 137, 550);
             ctx.fillText("Functions", 647, 250);
@@ -3600,7 +3600,7 @@ back.src = "images/back.jpeg"
 // RunFunction to do list:
 
 
-            // no f1 didn't tricker game over
+            // no f1 didn't trigger game over
             // it's still possible to modify the function parameters while the game loop is running - maybe there is a possibility to disable that. 
 
 

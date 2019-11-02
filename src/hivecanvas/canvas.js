@@ -3348,7 +3348,7 @@ back.onload = function () {
             arrow[2] = false;
             arrow[3] = false;
             ctx.font = "18px Helvetica";
-            ctx.fillStyle = "#f1f1f1";
+            ctx.fillStyle = "#b5b5b5";
             ctx.fillText("Execution", 282, 550);
             ctx.fillText("Speed", 137, 550);
             ctx.fillText("Functions", 647, 250);

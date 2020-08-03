@@ -134,6 +134,7 @@ function Filterbox(name, xClick, yClick, wClick, hClick) {
     this.wClick = wClick;
     this.hClick = hClick;
 }
+
 // Color filter blue box
 let filterBlue = new Filterbox("blue", 938, 224, 35, 35);
 let filterOrange = new Filterbox("orange", 938, 260, 35, 35);
@@ -3600,8 +3601,7 @@ back.src = "images/back.jpeg"
 // RunFunction to do list:
 
 
-            // no f1 didn't trigger game over
-            // it's still possible to modify the function parameters while the game loop is running - maybe there is a possibility to disable that. 
+// no checking if F1 has a colour option? 
 
 
 

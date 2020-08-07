@@ -28,7 +28,7 @@ let oneStep = false;
 
 // BOARD GRID
 
-let grid = [
+let grid = [ // array 1) grid no. 2) background colour 3) star true/false 4) co-ordinates for drawing the box
     [0, "grey", false, 100, 100], [1, "grey", false, 136, 100], [2, "grey", false, 172, 100], [3, "grey", false, 208, 100], [4, "grey", false, 244, 100], [5, "grey", false, 280, 100], [6, "grey", false, 316, 100], [7, "grey", false, 352, 100], [8, "grey", false, 388, 100], [9, "grey", false, 424, 100],
 
     [10, "grey", false, 100, 136], [11, "orange", false, 136, 136], [12, "green", true, 172, 136], [13, "green", false, 208, 136], [14, "orange", false, 244, 136], [15, "green", false, 280, 136], [16, "green", true, 316, 136], [17, "green", false, 352, 136], [18, "blue", false, 388, 136], [19, "orange", true, 424, 136],
@@ -336,18 +336,18 @@ Slot.prototype.cIndex = function () {
 
 // gameLoop parameters
 
-let startArrow = function (id, value, xArrow, yArrow) {
+let startArrow = function (id, value, xArrow, yArrow) { // creates an start arrow with co-ordinates
     this.id = id;
     this.value = value;
     this.xArrow = xArrow;
     this.yArrow = yArrow;
 }
-let arrow = [false, true, false, false]; // up, right, down, left
+let arrow = [false, true, false, false]; // array for up, right, down, left
 
-let pSquare = new startArrow(1, 0, 244, 136);
+let pSquare = new startArrow(1, 0, 244, 136); // pSquare makes use of arrowFunction .value to identify grid number. Not sure about ID, not being used??
 pSquare.value += 14;
 
-let colourFillArrow = function () {
+let colourFillArrow = function () { // pSquare.value is where the arrow is now, 'action' is the image name (spriteSheet)
     if (grid[pSquare.value][1] === "green") { // filling in correct color behind arrow
         ctx.drawImage(action, 175, 0, 35, 35, grid[(pSquare.value)][3], grid[(pSquare.value)][4], 35, 35);
     }
@@ -357,6 +357,8 @@ let colourFillArrow = function () {
     if (grid[(pSquare.value)][1] === "blue") { // filling in correct color behind arrow
         ctx.drawImage(action, 105, 0, 35, 35, grid[(pSquare.value)][3], grid[(pSquare.value)][4], 35, 35);
     }
+
+    // picks the correct arrow image to match current direction
     if (arrow[0] === true) {
         ctx.drawImage(action, 945, 0, 35, 35, grid[(pSquare.value)][3], grid[(pSquare.value)][4], 35, 35);
     }
@@ -375,15 +377,16 @@ let colourFillArrow = function () {
 
 // BODY ONLOAD - DRAW CANVAS
 
-// background onload
+// background onload - call sprite sheets
 let back = new Image();
 let atlas = new Image();
 let action = new Image();
 
 
+// Canvas first draws the board (atlas, drawBoard, drawFunctionSlots)
+// Then Canvas draws the current game status on top 
 
-
-back.onload = function () {
+back.onload = function () { // .onload calls the sprite sheets / images etc (back=game board)
     ctx.fillStyle = "#f1f1f1"; // #d3cfc7 for later
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(back, 0, 0, 480, 700, 550, 0, 480, 700); // clear function
@@ -544,7 +547,7 @@ back.onload = function () {
             ctx.drawImage(atlas, 700, 0, 35, 35, 172, 560, 35, 35); // x2 off on=735
             ctx.drawImage(atlas, 770, 0, 35, 35, 208, 560, 35, 35); // x3 off on=805
 
-            // gameLoop animation
+            // gameLoop animation boxes
 
             //ctx.drawImage(atlas, 0, 0, 35, 35, 135, 64, 40, 40); // F1
             ctx.drawImage(action, 840, 0, 35, 35, 176, 64, 40, 40); // slot 1
@@ -563,11 +566,11 @@ back.onload = function () {
 
         // switching between slots - set as active
         canvas.addEventListener('click', function (event) {
-            // Control that click event occurred within position of button
+            // Control that the click event occurred within position of button
             // NOTE: This assumes canvas element is positioned at top left corner 
             // TEST
 
-            if ( // switching active status on
+            if ( // switch for making slot active
                 event.x > box1.xClick + 8 &&
                 event.x < box1.xClick + box1.wClick + 8 &&
                 event.y > box1.yClick + 58 &&
@@ -576,7 +579,7 @@ back.onload = function () {
                 slot1.switchTo();
 
             }
-            if ( // switching active status on
+            if ( // switch for making slot active
                 event.x > box2.xClick + 7 && // this is the 35 offset horiz left
                 event.x < box2.xClick + box2.wClick + 8 && // this is the 35 offest horiz right
                 event.y > box2.yClick + 58 && // this is the 35 offset for vertical top
@@ -584,7 +587,7 @@ back.onload = function () {
             ) {
                 slot2.switchTo();
             }
-            if ( // switching active status on
+            if ( // switch for making slot active
                 event.x > box3.xClick + 8 && // this is the 35 offset horiz left
                 event.x < box3.xClick + box3.wClick + 8 && // this is the 35 offest horiz right
                 event.y > box3.yClick + 58 && // this is the 35 offset for vertical top
@@ -592,7 +595,7 @@ back.onload = function () {
             ) {
                 slot3.switchTo();
             }
-            if ( // switching active status on
+            if ( // switch for making slot active
                 event.x > box4.xClick + 8 && // this is the 35 offset horiz left
                 event.x < box4.xClick + box4.wClick + 8 && // this is the 35 offest horiz right
                 event.y > box4.yClick + 58 && // this is the 35 offset for vertical top
@@ -600,7 +603,7 @@ back.onload = function () {
             ) {
                 slot4.switchTo();
             }
-            if ( // switching active status on
+            if ( // switch for making slot active
                 event.x > box5.xClick + 8 && // this is the 35 offset horiz left
                 event.x < box5.xClick + box5.wClick + 8 && // this is the 35 offest horiz right
                 event.y > box5.yClick + 58 && // this is the 35 offset for vertical top
@@ -609,7 +612,7 @@ back.onload = function () {
 
                 slot5.switchTo();
             }
-            if ( // switching active status on
+            if ( // switch for making slot active
                 event.x > box6.xClick + 8 && // this is the 35 offset horiz left
                 event.x < box6.xClick + box6.wClick + 8 && // this is the 35 offest horiz right
                 event.y > box6.yClick + 58 && // this is the 35 offset for vertical top
@@ -619,7 +622,7 @@ back.onload = function () {
             }
         });
 
-        // filter color press - sending colour info to slots
+        // filter color key press - sending colour info to slots
         canvas.addEventListener('click', function (event) {
 
             if ( // blue button was pressed
@@ -1185,7 +1188,7 @@ back.onload = function () {
 
         // pause keyboard binding: p
 
-        document.onkeydown = function (f) { // p pauses
+        document.onkeydown = function (f) { // P key on keyboard pauses game
             if (f.keyCode == 80) {
                 console.log("Yep, pause button was pressed");
                 running = true;
@@ -1193,7 +1196,7 @@ back.onload = function () {
             }
         }
 
-        // select box keyboard binding: a & d
+        // select box keyboard binding: keyboard keys a & d move between slots
         document.onkeydown = function (e) {
             switch (e.keyCode) {
                 case 65:
@@ -1319,8 +1322,8 @@ back.onload = function () {
             }
         };
 
-        // select instruction sprites
-        action.onload = function () {
+        // action.onload prints graphics to screen based on player key press to set up their function
+        action.onload = function () { 
             // action keys pressed
             canvas.addEventListener('click', function (event) {
 
@@ -2146,9 +2149,9 @@ back.onload = function () {
 
 
 
-        // gameEngine functions
+        // Run gameEngine (play or one-step eventlistener press); order: changeDirection, colourChange, movePlayer
 
-        function changeDirection() {
+        function changeDirection() { // execute function instruction to 'change direction' - color variables needed for filling in correct colour afterwards
             if (grid[pSquare.value][1] === "orange" && slot.orangeOn === true) {
                 if (slot.turnRightOn === true) { // change direction - right turn
                     // filling in correct color behind arrow
@@ -2311,6 +2314,7 @@ back.onload = function () {
                             break;
                         case "arrowRight": // right -> up
                             arrowDirection = "arrowUp";
+                            moveForward = "moveUp";
                             ctx.drawImage(action, 945, 0, 35, 35, grid[(pSquare.value)][3], grid[(pSquare.value)][4], 35, 35);
                             arrow[0] = true;
                             arrow[1] = false;
@@ -2667,7 +2671,7 @@ back.onload = function () {
                 }
             }
         }
-        function movePlayer() {
+        function movePlayer() { // move forward & calculate new grid co-ordinates
             if (grid[pSquare.value][1] === "orange" && slot.orangeOn === true) {
                 if (slot.forwardOn === true) { // move forward
                     if (grid[pSquare.value][1] === "green") { // filling in correct color behind arrow
@@ -2825,7 +2829,7 @@ back.onload = function () {
                 }
             }
         }
-        function gameEngine() { // binds the Engine functions into one function
+        function gameEngine() { // binds the main play functions into one function called gameEngine; 
             changeDirection();
             colourChange();
             movePlayer();
@@ -2876,9 +2880,9 @@ back.onload = function () {
             }
         }
 
-        // slotRun functions
+        // gameEngineslotRun functions (slotMain calls them individually)
 
-        function slotMain() { // main game loop
+        function slotMain() { // main game loop - calls slotRuns 1-6
 
             slotAnimClear();
             if (abort) { // break condition for pause
@@ -3216,7 +3220,7 @@ back.onload = function () {
             })
             return;
         }
-        function gameLoop() {
+        function gameLoop() { // loops the game, i.e. runs slotMain repeatedly (iteratively) based on button Play event listener
             for (let i = 0; i < 1; i++) {
                 slotMain();
             }
@@ -3381,7 +3385,7 @@ back.onload = function () {
         }
 
 
-        // GAMELOOP ANIMATIONS
+        // GAMELOOP ANIMATIONS ABOVE GAMEBOARD
 
         function slotAnimClear() {
             ctx.globalAlpha = 1;

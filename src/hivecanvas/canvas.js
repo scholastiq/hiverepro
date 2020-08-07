@@ -6,7 +6,9 @@
  * https://www.gnu.org/licenses/gpl-3.0.html
  */
 
-// CANVAS for Hive repro
+// CANVAS for Hive repro_solve 
+
+// Hello Marky Mark - welcome to your Hive_solve branch.
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

@@ -791,9 +791,9 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
                 else if (slot3.orangeOn === true && slot3.boxActive === true) {
                     ctx.drawImage(atlas, 210, 0, 35, 35, slot3.xSlot, slot3.ySlot, 35, 35);
                     slot3.blueOn = false;
-                    slot3.orangeOn = true;
+                    slot3.orangeOn = false;
                     slot3.greenOn = false;
-                    slot3.greyOn = false;
+                    slot3.greyOn = true;
                     slot3.zIndex();
                 }
                 // slot 4

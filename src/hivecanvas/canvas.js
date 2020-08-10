@@ -10,6 +10,13 @@
 
 // Hello Marky Mark - welcome to your Hive_solve branch.
 
+import * as $C from '/js-combinatorics';
+
+let it =  new $C.Combination('abcdefgh', 4);
+for (const elem of it) {
+  console.log(elem) // ['a', 'b', 'c', 'd'] ... ['a', 'd', 'e', 'f']
+}
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -25,6 +32,7 @@ let running = false;
 let abort = false;
 let gamePause = false;
 let oneStep = false;
+let infiniteLoop = [0,0,0,0];
 
 
 
@@ -222,7 +230,7 @@ Slot.prototype.boxActiveStyling = function () {
     }
 }
 
-// move commmands to slots 
+// draw styling for active slot 
 
 Slot.prototype.switchTo = function () {
     if (this.name === "slot1") {
@@ -300,7 +308,7 @@ Slot.prototype.switchTo = function () {
 
 }
 
-Slot.prototype.zIndex = function () {
+Slot.prototype.zIndex = function () { // draws selected function to active slot
     if (this.forwardOn === true) {
         ctx.drawImage(atlas, 70, 0, 35, 35, this.xSlot, this.ySlot, 35, 35);
     }
@@ -321,7 +329,7 @@ Slot.prototype.zIndex = function () {
     }
 }
 
-Slot.prototype.cIndex = function () {
+Slot.prototype.cIndex = function () { // draws selected colour to function slots
     if (this.blueOn === true) {
         ctx.drawImage(atlas, 105, 0, 35, 35, this.xSlot, this.ySlot, 35, 35);
     }
@@ -336,7 +344,7 @@ Slot.prototype.cIndex = function () {
     }
 }
 
-// gameLoop parameters
+// some global gameLoop parameters
 
 let startArrow = function (id, value, xArrow, yArrow) { // creates an start arrow with co-ordinates
     this.id = id;
@@ -386,7 +394,9 @@ let action = new Image();
 
 
 // Canvas first draws the board (atlas, drawBoard, drawFunctionSlots)
-// Then Canvas draws the current game status on top 
+// Canvas then draws the current game status on top 
+// Canvas then loads eventListeners for user input
+// Canvas then executes function setup and game loop commands based on those listeners
 
 back.onload = function () { // .onload calls the sprite sheets / images etc (back=game board)
     ctx.fillStyle = "#f1f1f1"; // #d3cfc7 for later
@@ -569,8 +579,7 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
         // switching between slots - set as active
         canvas.addEventListener('click', function (event) {
             // Control that the click event occurred within position of button
-            // NOTE: This assumes canvas element is positioned at top left corner 
-            // TEST
+
 
             if ( // switch for making slot active
                 event.x > box1.xClick + 8 &&
@@ -624,7 +633,7 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
             }
         });
 
-        // filter color key press - sending colour info to slots
+        // key press for square colors & send colour info to slots
         canvas.addEventListener('click', function (event) {
 
             if ( // blue button was pressed
@@ -791,9 +800,9 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
                 else if (slot3.orangeOn === true && slot3.boxActive === true) {
                     ctx.drawImage(atlas, 210, 0, 35, 35, slot3.xSlot, slot3.ySlot, 35, 35);
                     slot3.blueOn = false;
-                    slot3.orangeOn = true;
+                    slot3.orangeOn = false;
                     slot3.greenOn = false;
-                    slot3.greyOn = false;
+                    slot3.greyOn = true;
                     slot3.zIndex();
                 }
                 // slot 4
@@ -2142,16 +2151,184 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
                 }
             });
 
-
         }
 
         action.src = "images/actions.png";
 
-
+        
 
 
 
         // Run gameEngine (play or one-step eventlistener press); order: changeDirection, colourChange, movePlayer
+        function solveReset () {
+            slot1.blueOn = false;
+            slot2.blueOn = false;
+            slot3.blueOn = false;
+            slot4.blueOn = false;
+            slot5.blueOn = false;
+            slot6.blueOn = false;
+            slot1.greenOn = false;
+            slot2.greenOn = false;
+            slot3.greenOn = false;
+            slot4.greenOn = false;
+            slot5.greenOn = false;
+            slot6.greenOn = false;
+            slot1.orangeOn = false;
+            slot2.orangeOn = false;
+            slot3.orangeOn = false;
+            slot4.orangeOn = false;
+            slot5.orangeOn = false;
+            slot6.orangeOn = false;
+            slot1.forwardOn = false;
+            slot2.forwardOn = false;
+            slot3.forwardOn = false;
+            slot4.forwardOn = false;
+            slot5.forwardOn = false;
+            slot6.forwardOn = false;
+            slot1.turnRightOn = false;
+            slot2.turnRightOn = false;
+            slot3.turnRightOn = false;
+            slot4.turnRightOn = false;
+            slot5.turnRightOn = false;
+            slot6.turnRightOn = false;
+            slot1.turnLeftOn = false;
+            slot2.turnLeftOn = false;
+            slot3.turnLeftOn = false;
+            slot4.turnLeftOn = false;
+            slot5.turnLeftOn = false;
+            slot6.turnLeftOn = false;
+            slot1.f1On = false;
+            slot2.f1On = false;
+            slot3.f1On = false;
+            slot4.f1On = false;
+            slot5.f1On = false;
+            slot6.f1On = true;
+            slot1.orangePenOn = false;
+            slot2.orangePenOn = false;
+            slot3.orangePenOn = false;
+            slot4.orangePenOn = false;
+            slot5.orangePenOn = false;
+            slot6.orangePenOn = false;
+            slot1.greenPenOn = false;
+            slot2.greenPenOn = false;
+            slot3.greenPenOn = false;
+            slot4.greenPenOn = false;
+            slot5.greenPenOn = false;
+            slot6.greenPenOn = false;
+            slot1.greyOn = true;
+            slot2.greyOn = true;
+            slot3.greyOn = true;
+            slot4.greyOn = true;
+            slot5.greyOn = true;
+            slot6.greyOn = true;
+        }
+        solveReset();
+        
+
+        let random = [false,true,true,true,true,true,true,true,true
+        ]
+        function solve () {
+            // set function parameters
+            slot1.forwardOn = true;
+            slot1.turnRightOn = false;
+            slot1.turnLeftOn = false;
+            slot1.orangePenOn = false;
+            slot1.greenPenOn = false;
+            slot1.blueOn = random[0];
+            slot1.orangeOn = random[1];
+            slot1.greenOn = false;
+            slot1.greyOn = false;
+
+            slot2.forwardOn = true;
+            slot2.turnRightOn = false;
+            slot2.turnLeftOn = false;
+            slot2.orangePenOn = false;
+            slot2.greenPenOn = false;
+            slot2.blueOn = true;
+            slot2.orangeOn = false;
+            slot2.greenOn = false;
+            slot2.greyOn = false;
+
+            slot3.forwardOn = true;
+            slot3.turnRightOn = false;
+            slot3.turnLeftOn = false;
+            slot3.orangePenOn = false;
+            slot3.greenPenOn = false;
+            slot3.blueOn = true;
+            slot3.orangeOn = false;
+            slot3.greenOn = false;
+            slot3.greyOn = false;
+
+            slot4.forwardOn = false;
+            slot4.turnRightOn = true;
+            slot4.turnLeftOn = false;
+            slot4.orangePenOn = false;
+            slot4.greenPenOn = false;
+            slot4.blueOn = true;
+            slot4.orangeOn = false;
+            slot4.greenOn = random[4];
+            slot4.greyOn = false;
+
+            slot5.forwardOn = false;
+            slot5.turnRightOn = true;
+            slot5.turnLeftOn = false;
+            slot5.orangePenOn = false;
+            slot5.greenPenOn = false;
+            slot5.blueOn = true;
+            slot5.orangeOn = false;
+            slot5.greenOn = false;
+            slot5.greyOn = false;
+
+        }
+
+        let findPermutations = (string) => {
+
+            if (!string || typeof string !== "string"){
+                return "Please enter a string"
+            }
+            else if (string.length < 2 ){
+               return string
+            }  
+            
+  
+            let permutationsArray = [];
+              
+            for (let i = 0; i < string.length/2; i++){
+               
+                let char = string[i];
+               
+                if (string.indexOf(char) != i)
+                continue
+
+                let remainingChars = string.slice(0,i) + string.slice(i + 1,string.length);
+               
+                for (let permutation of findPermutations(remainingChars)){
+                    permutationsArray.push(char + permutation) 
+                }
+              
+                // Call procedure p recursively on each subproblem
+              // Combine the results from the subproblems
+            }
+            console.log(permutationsArray);
+            return permutationsArray
+            
+        }
+        //          findPermutations("");
+          
+
+
+/*         let startArrow = function (id, value, xArrow, yArrow) { // creates an start arrow with co-ordinates
+            this.id = id;
+            this.value = value;
+            this.xArrow = xArrow;
+            this.yArrow = yArrow;
+        }
+        let arrow = [false, true, false, false]; // array for up, right, down, left
+        
+        let pSquare = new startArrow(1, 0, 244, 136); // pSquare makes use of arrowFunction .value to identify grid number. Not sure about ID, not being used??
+        pSquare.value += 14;
+ */
+
 
         function changeDirection() { // execute function instruction to 'change direction' - color variables needed for filling in correct colour afterwards
             if (grid[pSquare.value][1] === "orange" && slot.orangeOn === true) {
@@ -2832,6 +3009,7 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
             }
         }
         function gameEngine() { // binds the main play functions into one function called gameEngine; 
+            // solve();
             changeDirection();
             colourChange();
             movePlayer();
@@ -2845,7 +3023,7 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
                 gridOnlyReset();
                 return;
             }
-            if (grid[pSquare.value][1] === "grey") {
+            if (grid[pSquare.value][1] === "grey") { // grey here meaning not the game squares, but the grey around them
                 ctx.fillStyle = "#f1f1f1"; // #d3cfc7 for later
                 ctx.fillRect(grid[(pSquare.value)][3], grid[(pSquare.value)][4], 35, 35);
                 abort = true;
@@ -2884,8 +3062,11 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
 
         // gameEngineslotRun functions (slotMain calls them individually)
 
-        function slotMain() { // main game loop - calls slotRuns 1-6
 
+
+
+        function slotMain() { // main game loop - calls slotRuns 1-6
+            solve();
             slotAnimClear();
             if (abort) { // break condition for pause
                 return;
@@ -3018,7 +3199,7 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
                                                             switch (slot.f1On) { // f1 return check
                                                                 case true:
                                                                     slot = slotSelect[0];
-                                                                    slotMain();
+                                                                    gameLoop();
                                                                     break;
                                                                 case false:
                                                                     ctx.globalAlpha = 0.9
@@ -3046,6 +3227,9 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
 
 
         }
+
+        // slotRuns for one-step play - called instead of slotMain when one-step is used 
+
         function slotRun1() {
 
             function sleep(ms, f) {
@@ -3222,12 +3406,6 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
             })
             return;
         }
-        function gameLoop() { // loops the game, i.e. runs slotMain repeatedly (iteratively) based on button Play event listener
-            for (let i = 0; i < 1; i++) {
-                slotMain();
-            }
-
-        }
         function playOneStep() {
             console.log("Via playOneStep")
             if (slot === slotSelect[0]) {
@@ -3268,7 +3446,18 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
                 return;
             }
         }
+        
+        // main game loop function
 
+        function gameLoop() { 
+            for (let i = 0; i < 1; i++) {
+                console.log("game loop starting" + "'i' value= " + i);
+                //alert(i);
+                slotMain();
+            }
+
+        }
+        
         // game resets
 
         function fullBoardReset() {
@@ -3594,6 +3783,8 @@ back.onload = function () { // .onload calls the sprite sheets / images etc (bac
             }
         }
         slotAnimClear();
+
+        
 
     }
 }

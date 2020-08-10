@@ -10,7 +10,8 @@
 
 // Hello Marky Mark - welcome to your Hive_solve branch.
 
-import * as $C from '/js-combinatorics';
+import * as $C from 'combinatorics.js';
+
 
 let it =  new $C.Combination('abcdefgh', 4);
 for (const elem of it) {
